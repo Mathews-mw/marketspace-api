@@ -1,7 +1,7 @@
+import { Role } from '@/core/auth/roles';
 import { Entity } from '@/core/entities/entity';
 import { Optional } from '@/core/types/optional';
 import { UniqueEntityId } from '@/core/entities/unique-entity-id';
-import { Role } from '@/core/auth/roles';
 
 export interface IUserProps {
 	name: string;
@@ -10,6 +10,7 @@ export interface IUserProps {
 	password: string;
 	role: Role;
 	avatar?: string | null;
+	isActive: boolean;
 	createdAt: Date;
 	updatedAt?: Date | null;
 }
@@ -69,6 +70,15 @@ export class User extends Entity<IUserProps> {
 		this._touch();
 	}
 
+	get isActive() {
+		return this.props.isActive;
+	}
+
+	set isActive(isActive: boolean) {
+		this.props.isActive = isActive;
+		this._touch();
+	}
+
 	get createdAt() {
 		return this.props.createdAt;
 	}
@@ -81,8 +91,16 @@ export class User extends Entity<IUserProps> {
 		this.props.updatedAt = new Date();
 	}
 
-	static create(props: Optional<IUserProps, 'role' | 'createdAt' | 'updatedAt'>, id?: UniqueEntityId) {
-		const user = new User({ ...props, role: props.role ?? 'CUSTOMER', createdAt: props.createdAt ?? new Date() }, id);
+	static create(props: Optional<IUserProps, 'role' | 'isActive' | 'createdAt' | 'updatedAt'>, id?: UniqueEntityId) {
+		const user = new User(
+			{
+				...props,
+				role: props.role ?? 'CUSTOMER',
+				isActive: props.isActive ?? true,
+				createdAt: props.createdAt ?? new Date(),
+			},
+			id
+		);
 
 		return user;
 	}

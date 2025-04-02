@@ -78,6 +78,10 @@ export class Product extends Entity<IProductProps> {
 		this._touch();
 	}
 
+	get createdAt() {
+		return this.props.createdAt;
+	}
+
 	get updatedAt() {
 		return this.props.updatedAt;
 	}

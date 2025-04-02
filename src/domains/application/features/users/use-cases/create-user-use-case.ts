@@ -1,11 +1,15 @@
 import { hash } from 'bcryptjs';
+import { randomUUID } from 'node:crypto';
 import { inject, injectable } from 'tsyringe';
 
 import { User } from '@/domains/models/entities/user';
 import { failure, Outcome, success } from '@/core/outcome';
+import { Account } from '@/domains/models/entities/account';
 import cryptographyConfig from '@/config/cryptography-config';
 import { BadRequestError } from '@/core/errors/bad-request-errors';
 import { IUserRepository } from '../repositories/user-repository';
+import { IAccountRepository } from '../repositories/account-repository';
+import { DEPENDENCY_IDENTIFIERS } from '@/shared/containers/dependency-identifiers';
 
 interface IRequest {
 	name: string;
@@ -17,8 +21,12 @@ interface IRequest {
 
 type Response = Outcome<BadRequestError, { user: User }>;
 
+@injectable()
 export class CreateUserUseCase {
-	constructor(private usersRepository: IUserRepository) {}
+	constructor(
+		@inject(DEPENDENCY_IDENTIFIERS.USERS_REPOSITORY) private usersRepository: IUserRepository,
+		@inject(DEPENDENCY_IDENTIFIERS.ACCOUNTS_REPOSITORY) private accountsRepository: IAccountRepository
+	) {}
 
 	async execute({ name, email, password, phone, avatar }: IRequest): Promise<Response> {
 		const userWithSameEmail = await this.usersRepository.findByEmail(email);
@@ -37,7 +45,17 @@ export class CreateUserUseCase {
 			avatar,
 		});
 
+		const newAccount = Account.create({
+			userId: newUser.id,
+			provider: 'CREDENTIALS',
+			providerAccountId: randomUUID(),
+		});
+
 		await this.usersRepository.create(newUser);
+		await this.accountsRepository.create(newAccount);
+
+		console.log('newUser: ', newUser);
+		console.log('newAccount: ', newAccount);
 
 		return success({ user: newUser });
 	}

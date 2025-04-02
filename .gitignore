@@ -4,3 +4,4 @@ node_modules
 notes.md
 
 tmp/uploads/**
+market-space-firebase-adminsdk.json
