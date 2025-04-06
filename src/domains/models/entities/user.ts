@@ -6,8 +6,8 @@ import { UniqueEntityId } from '@/core/entities/unique-entity-id';
 export interface IUserProps {
 	name: string;
 	email: string;
-	phone: string;
-	password: string;
+	phone?: string | null;
+	password?: string | null;
 	role: Role;
 	avatar?: string | null;
 	isActive: boolean;
@@ -38,7 +38,7 @@ export class User extends Entity<IUserProps> {
 		return this.props.phone;
 	}
 
-	set phone(phone: string) {
+	set phone(phone: string | null | undefined) {
 		this.props.phone = phone;
 		this._touch();
 	}
@@ -47,7 +47,7 @@ export class User extends Entity<IUserProps> {
 		return this.props.password;
 	}
 
-	set password(password: string) {
+	set password(password: string | null | undefined) {
 		this.props.password = password;
 		this._touch();
 	}

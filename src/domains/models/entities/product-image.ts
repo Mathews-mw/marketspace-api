@@ -3,7 +3,8 @@ import { Optional } from '@/core/types/optional';
 import { UniqueEntityId } from '@/core/entities/unique-entity-id';
 
 export interface IProductImageProps {
-	title: string;
+	fileName: string;
+	uniqueName: string;
 	url: string;
 	productId: UniqueEntityId;
 	createdAt: Date;
@@ -11,12 +12,21 @@ export interface IProductImageProps {
 }
 
 export class ProductImage extends Entity<IProductImageProps> {
-	get title() {
-		return this.props.title;
+	get fileName() {
+		return this.props.fileName;
 	}
 
-	set title(title: string) {
-		this.props.title = title;
+	set fileName(fileName: string) {
+		this.props.fileName = fileName;
+		this._touch();
+	}
+
+	get uniqueName() {
+		return this.props.uniqueName;
+	}
+
+	set uniqueName(uniqueName: string) {
+		this.props.uniqueName = uniqueName;
 		this._touch();
 	}
 

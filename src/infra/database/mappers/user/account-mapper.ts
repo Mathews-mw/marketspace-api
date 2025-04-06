@@ -5,13 +5,16 @@ import { UniqueEntityId } from '@/core/entities/unique-entity-id';
 
 export class AccountMapper {
 	static toDomain(data: PrismaAccount): Account {
-		return Account.create({
-			userId: new UniqueEntityId(data.userId),
-			provider: data.provider,
-			providerAccountId: data.providerAccountId,
-			createdAt: data.createdAt,
-			updatedAt: data.updatedAt,
-		});
+		return Account.create(
+			{
+				userId: new UniqueEntityId(data.userId),
+				provider: data.provider,
+				providerAccountId: data.providerAccountId,
+				createdAt: data.createdAt,
+				updatedAt: data.updatedAt,
+			},
+			new UniqueEntityId(data.id)
+		);
 	}
 
 	static toPrisma(data: Account): PrismaAccount {

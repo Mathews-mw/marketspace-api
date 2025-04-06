@@ -6,8 +6,8 @@ import { User } from '@/domains/models/entities/user';
 import { failure, Outcome, success } from '@/core/outcome';
 import { Account } from '@/domains/models/entities/account';
 import cryptographyConfig from '@/config/cryptography-config';
-import { BadRequestError } from '@/core/errors/bad-request-errors';
 import { IUserRepository } from '../repositories/user-repository';
+import { BadRequestError } from '@/core/errors/bad-request-errors';
 import { IAccountRepository } from '../repositories/account-repository';
 import { DEPENDENCY_IDENTIFIERS } from '@/shared/containers/dependency-identifiers';
 

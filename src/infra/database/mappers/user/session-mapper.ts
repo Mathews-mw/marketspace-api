@@ -5,12 +5,15 @@ import { UniqueEntityId } from '@/core/entities/unique-entity-id';
 
 export class SessionMapper {
 	static toDomain(data: PrismaSession): Session {
-		return Session.create({
-			userId: new UniqueEntityId(data.userId),
-			token: data.token,
-			expiresAt: data.expiresAt,
-			registerAt: data.registerAt,
-		});
+		return Session.create(
+			{
+				userId: new UniqueEntityId(data.userId),
+				token: data.token,
+				expiresAt: data.expiresAt,
+				registerAt: data.registerAt,
+			},
+			new UniqueEntityId(data.id)
+		);
 	}
 
 	static toPrisma(data: Session): PrismaSession {

@@ -1,20 +1,20 @@
+import { inject, injectable } from 'tsyringe';
+
 import { failure, Outcome, success } from '@/core/outcome';
-import { Product } from '@/domains/models/entities/product';
 import { IProductRepository } from '../repositories/product-repository';
-import { IUserRepository } from '../../users/repositories/user-repository';
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
+import { DEPENDENCY_IDENTIFIERS } from '@/shared/containers/dependency-identifiers';
+import { ProductDetails } from '@/domains/models/entities/value-objects/product-details';
 
 interface IRequest {
 	productId: string;
 }
 
-type Response = Outcome<ResourceNotFoundError, { product: Product }>;
+type Response = Outcome<ResourceNotFoundError, { product: ProductDetails }>;
 
-export class ListingUserProductsUseCase {
-	constructor(
-		private usersRepository: IUserRepository,
-		private productsRepository: IProductRepository
-	) {}
+@injectable()
+export class GetProductDetailsUseCase {
+	constructor(@inject(DEPENDENCY_IDENTIFIERS.PRODUCTS_REPOSITORY) private productsRepository: IProductRepository) {}
 
 	async execute({ productId }: IRequest): Promise<Response> {
 		const product = await this.productsRepository.findDetails(productId);

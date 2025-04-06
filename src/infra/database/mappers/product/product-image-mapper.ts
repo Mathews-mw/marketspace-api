@@ -5,19 +5,24 @@ import { ProductImage } from '@/domains/models/entities/product-image';
 
 export class ProductImageMapper {
 	static toDomain(data: PrismaProductImage): ProductImage {
-		return ProductImage.create({
-			title: data.title,
-			url: data.url,
-			productId: new UniqueEntityId(data.productId),
-			createdAt: data.createdAt,
-			updatedAt: data.updatedAt,
-		});
+		return ProductImage.create(
+			{
+				fileName: data.fileName,
+				uniqueName: data.uniqueName,
+				url: data.url,
+				productId: new UniqueEntityId(data.productId),
+				createdAt: data.createdAt,
+				updatedAt: data.updatedAt,
+			},
+			new UniqueEntityId(data.id)
+		);
 	}
 
 	static toPrisma(data: ProductImage): PrismaProductImage {
 		return {
 			id: data.id.toString(),
-			title: data.title,
+			fileName: data.fileName,
+			uniqueName: data.uniqueName,
 			url: data.url,
 			productId: data.productId.toString(),
 			createdAt: data.createdAt,

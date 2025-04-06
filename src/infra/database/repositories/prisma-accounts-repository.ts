@@ -1,7 +1,7 @@
 import { prisma } from '../prisma';
-import { AccountMapper } from '../mappers/account-mapper';
+import { AccountMapper } from '../mappers/user/account-mapper';
 import { Account } from '@/domains/models/entities/account';
-import { IAccountRepository } from '@/domains/application/features/users/repositories/account-repository';
+import { IAccountRepository, IParams } from '@/domains/application/features/users/repositories/account-repository';
 
 export class PrismaAccountsRepository implements IAccountRepository {
 	async create(account: Account) {
@@ -49,6 +49,23 @@ export class PrismaAccountsRepository implements IAccountRepository {
 		const account = await prisma.account.findUnique({
 			where: {
 				id,
+			},
+		});
+
+		if (!account) {
+			return null;
+		}
+
+		return AccountMapper.toDomain(account);
+	}
+
+	async findUniqueByProvider({ userId, provider }: IParams): Promise<Account | null> {
+		const account = await prisma.account.findUnique({
+			where: {
+				userId_provider: {
+					userId: userId,
+					provider,
+				},
 			},
 		});
 

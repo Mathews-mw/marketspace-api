@@ -4,6 +4,8 @@ import '@/shared/containers/index';
 import fastify from 'fastify';
 import fastifyJwt from '@fastify/jwt';
 import fastifyCors from '@fastify/cors';
+import fastifyCookie from '@fastify/cookie';
+import fastifyOauth2 from '@fastify/oauth2';
 import fastifySwagger from '@fastify/swagger';
 import fastifySwaggerUi from '@fastify/swagger-ui';
 import fastifyMultipart from '@fastify/multipart';
@@ -20,10 +22,13 @@ import { errorHandler } from './error-handler';
 
 export const app = fastify().withTypeProvider<ZodTypeProvider>();
 
+app.register(fastifyCookie);
+
 app.setSerializerCompiler(serializerCompiler);
 app.setValidatorCompiler(validatorCompiler);
 
 app.register(fastifyMultipart, { limits: { files: 6 } });
+
 app.setErrorHandler(errorHandler);
 
 app.register(fastifySwagger, {

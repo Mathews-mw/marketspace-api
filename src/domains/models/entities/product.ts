@@ -20,7 +20,7 @@ export class Product extends Entity<IProductProps> {
 	}
 
 	set name(name: string) {
-		this.name = name;
+		this.props.name = name;
 		this._touch();
 	}
 
@@ -29,7 +29,7 @@ export class Product extends Entity<IProductProps> {
 	}
 
 	set description(description: string) {
-		this.description = description;
+		this.props.description = description;
 		this._touch();
 	}
 
@@ -38,7 +38,7 @@ export class Product extends Entity<IProductProps> {
 	}
 
 	set isNew(isNew: boolean) {
-		this.isNew = isNew;
+		this.props.isNew = isNew;
 		this._touch();
 	}
 
@@ -47,7 +47,7 @@ export class Product extends Entity<IProductProps> {
 	}
 
 	set price(price: number) {
-		this.price = price;
+		this.props.price = price;
 		this._touch();
 	}
 
@@ -56,7 +56,7 @@ export class Product extends Entity<IProductProps> {
 	}
 
 	set acceptTrade(acceptTrade: boolean) {
-		this.acceptTrade = acceptTrade;
+		this.props.acceptTrade = acceptTrade;
 		this._touch();
 	}
 
@@ -65,7 +65,7 @@ export class Product extends Entity<IProductProps> {
 	}
 
 	set userId(userId: UniqueEntityId) {
-		this.userId = userId;
+		this.props.userId = userId;
 		this._touch();
 	}
 
@@ -74,7 +74,7 @@ export class Product extends Entity<IProductProps> {
 	}
 
 	set isActive(isActive: boolean) {
-		this.isActive = isActive;
+		this.props.isActive = isActive;
 		this._touch();
 	}
 

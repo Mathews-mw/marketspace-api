@@ -5,17 +5,20 @@ import { UniqueEntityId } from '@/core/entities/unique-entity-id';
 
 export class ProductMapper {
 	static toDomain(data: PrismaProduct): Product {
-		return Product.create({
-			name: data.name,
-			description: data.description,
-			isNew: data.isNew,
-			price: data.price,
-			acceptTrade: data.acceptTrade,
-			userId: new UniqueEntityId(data.userId),
-			isActive: data.isActive,
-			createdAt: data.createdAt,
-			updatedAt: data.updatedAt,
-		});
+		return Product.create(
+			{
+				name: data.name,
+				description: data.description,
+				isNew: data.isNew,
+				price: data.price,
+				acceptTrade: data.acceptTrade,
+				userId: new UniqueEntityId(data.userId),
+				isActive: data.isActive,
+				createdAt: data.createdAt,
+				updatedAt: data.updatedAt,
+			},
+			new UniqueEntityId(data.id)
+		);
 	}
 
 	static toPrisma(data: Product): PrismaProduct {

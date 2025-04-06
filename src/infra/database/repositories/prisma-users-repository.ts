@@ -1,6 +1,6 @@
 import { prisma } from '../prisma';
-import { UserMapper } from '../mappers/user-mapper';
 import { User } from '@/domains/models/entities/user';
+import { UserMapper } from '../mappers/user/user-mapper';
 import {
 	IFindUniqueParams,
 	IUserQuerySearch,

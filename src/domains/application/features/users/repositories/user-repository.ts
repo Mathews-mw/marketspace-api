@@ -1,5 +1,6 @@
-import { IPaginationResponse } from '@/core/interfaces/paginating-interfaces';
 import { User } from '@/domains/models/entities/user';
+import { PaymentType } from '@/domains/models/entities/payment-method';
+import { ProductInfo } from '@/domains/models/entities/value-objects/product-info';
 
 export interface IUserQuerySearch {
 	search?: string;
@@ -8,6 +9,14 @@ export interface IUserQuerySearch {
 export interface IFindUniqueParams {
 	id?: string;
 	email?: string;
+}
+
+export interface IFindManyProductQuerySearch {
+	userId: string;
+	search?: string;
+	isNew?: boolean;
+	acceptTrade?: boolean;
+	paymentMethods?: Array<PaymentType>;
 }
 
 export interface IUserRepository {

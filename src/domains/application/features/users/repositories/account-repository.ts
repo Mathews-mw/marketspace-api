@@ -1,4 +1,9 @@
-import { Account } from '@/domains/models/entities/account';
+import { Account, AccountProvider } from '@/domains/models/entities/account';
+
+export interface IParams {
+	userId: string;
+	provider: AccountProvider;
+}
 
 export interface IAccountRepository {
 	create(account: Account): Promise<Account>;
@@ -6,4 +11,5 @@ export interface IAccountRepository {
 	delete(account: Account): Promise<void>;
 	findManyByUserId(userId: string): Promise<Account[]>;
 	findById(id: string): Promise<Account | null>;
+	findUniqueByProvider(params: IParams): Promise<Account | null>;
 }

@@ -1,5 +1,5 @@
 import { prisma } from '../prisma';
-import { PaymentMethodMapper } from '../mappers/payment-method-mapper';
+import { PaymentMethodMapper } from '../mappers/product/payment-method-mapper';
 import { PaymentMethod } from '@/domains/models/entities/payment-method';
 import { IPaymentMethodRepository } from '@/domains/application/features/payment-methods/repositories/payment-method-repository';
 
@@ -12,6 +12,14 @@ export class PrismaPaymentMethodsRepository implements IPaymentMethodRepository 
 		});
 
 		return paymentMethod;
+	}
+
+	async createMany(paymentMethods: Array<PaymentMethod>): Promise<void> {
+		const data = paymentMethods.map(PaymentMethodMapper.toPrisma);
+
+		await prisma.paymentMethod.createMany({
+			data,
+		});
 	}
 
 	async update(paymentMethod: PaymentMethod) {
@@ -31,6 +39,16 @@ export class PrismaPaymentMethodsRepository implements IPaymentMethodRepository 
 		await prisma.paymentMethod.delete({
 			where: {
 				id: paymentMethod.id.toString(),
+			},
+		});
+	}
+
+	async deleteMany(toDelete: Array<string>) {
+		await prisma.paymentMethod.deleteMany({
+			where: {
+				id: {
+					in: toDelete,
+				},
 			},
 		});
 	}

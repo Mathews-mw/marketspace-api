@@ -1,7 +1,7 @@
 import { container } from 'tsyringe';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
-import { CreateUserRequest } from '../../schemas/create-user-schema';
+import { CreateUserRequest } from '../../schemas/user/create-user-schema';
 import { CreateUserUseCase } from '@/domains/application/features/users/use-cases/create-user-use-case';
 
 export async function createUserController(request: FastifyRequest, reply: FastifyReply) {

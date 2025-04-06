@@ -17,8 +17,8 @@ model User {
   id        String    @id @unique @default(uuid())
   name      String
   email     String    @unique
-  phone     String    @unique
-  password  String
+  phone     String?   @unique
+  password  String?
   role      UserRole  @default(CUSTOMER)
   avatar    String?
   isActive  Boolean   @default(true) @map("is_active")
@@ -86,10 +86,10 @@ model Product {
   name        String
   description String
   isNew       Boolean   @map("is_new")
-  price       Float
+  price       Int
   acceptTrade Boolean   @map("accept_trade")
   userId      String    @map("user_id")
-  isActive    Boolean   @map("is_active")
+  isActive    Boolean   @default(true) @map("is_active")
   createdAt   DateTime  @default(now()) @map("created_at")
   updatedAt   DateTime? @map("updated_at")
 
@@ -102,15 +102,17 @@ model Product {
 }
 
 model ProductImage {
-  id        String    @id @default(uuid())
-  title     String
-  url       String
-  productId String
-  createdAt DateTime  @default(now()) @map("created_at")
-  updatedAt DateTime? @map("updated_at")
+  id         String    @id @default(uuid())
+  fileName   String    @map("file_name")
+  uniqueName String    @unique @map("unique_name")
+  url        String    @unique
+  productId  String
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime? @map("updated_at")
 
   product Product @relation(fields: [productId], references: [id], onUpdate: Cascade, onDelete: Cascade)
 
+  @@unique([productId, url])
   @@map("product_images")
 }
 
@@ -125,10 +127,11 @@ enum PaymentType {
 
 model PaymentMethod {
   id        String      @id @default(uuid())
-  type      PaymentType
   productId String
+  type      PaymentType
 
   product Product @relation(fields: [productId], references: [id], onUpdate: Cascade, onDelete: Cascade)
 
+  @@unique([productId, type])
   @@map("payment_methods")
 }

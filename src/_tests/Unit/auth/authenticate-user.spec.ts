@@ -1,7 +1,7 @@
 import { UnauthorizedError } from '@/core/errors/unauthorized-error';
 import { InMemoryUserRepository } from '@/_tests/in-memory/in-memory-users-repository';
 import { CreateUserUseCase } from '@/domains/application/features/users/use-cases/create-user-use-case';
-import { AuthenticateUserUseCase } from '@/domains/application/features/auth/use-cases/authenticate-user-use-case';
+import { AuthenticateUserUseCase } from '@/domains/application/features/auth/use-cases/authenticate-with-credentials-use-case';
 
 let createUserUseCase: CreateUserUseCase;
 let usersRepository: InMemoryUserRepository;

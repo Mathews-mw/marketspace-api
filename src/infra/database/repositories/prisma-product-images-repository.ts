@@ -1,5 +1,5 @@
 import { prisma } from '../prisma';
-import { ProductImageMapper } from '../mappers/product-image-mapper';
+import { ProductImageMapper } from '../mappers/product/product-image-mapper';
 import { ProductImage } from '@/domains/models/entities/product-image';
 import { IProductImageRepository } from '@/domains/application/features/product-images/repositories/product-image-repository';
 

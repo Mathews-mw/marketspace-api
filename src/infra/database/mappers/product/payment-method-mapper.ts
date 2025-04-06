@@ -5,10 +5,13 @@ import { PaymentMethod } from '@/domains/models/entities/payment-method';
 
 export class PaymentMethodMapper {
 	static toDomain(data: PrismaPaymentMethod): PaymentMethod {
-		return PaymentMethod.create({
-			type: data.type,
-			productId: new UniqueEntityId(data.productId),
-		});
+		return PaymentMethod.create(
+			{
+				type: data.type,
+				productId: new UniqueEntityId(data.productId),
+			},
+			new UniqueEntityId(data.id)
+		);
 	}
 
 	static toPrisma(data: PaymentMethod): PrismaPaymentMethod {
