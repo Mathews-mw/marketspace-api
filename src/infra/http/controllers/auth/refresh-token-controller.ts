@@ -11,7 +11,7 @@ export async function refreshTokenController(request: FastifyRequest, reply: Fas
 			sub,
 		},
 		{
-			expiresIn: '5d',
+			expiresIn: '3d',
 		}
 	);
 

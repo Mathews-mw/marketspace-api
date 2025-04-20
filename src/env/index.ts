@@ -12,6 +12,8 @@ export const envSchema = z.object({
 	GOOGLE_CLIENT_ID: z.string(),
 	GOOGLE_CLIENT_SECRET: z.string(),
 	GOOGLE_CALLBACK_URL: z.string().url(),
+	REDIS_HOST: z.string().default('127.0.0.1'),
+	REDIS_PORT: z.coerce.number().default(6379),
 });
 
 const _env = envSchema.safeParse(process.env);

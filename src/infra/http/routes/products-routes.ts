@@ -14,6 +14,8 @@ import { listingProductsController } from '../controllers/products/listing-produ
 import { listingProductsByUserSchema } from '../schemas/product/listing-products-by-user-schema';
 import { getProductDetailsController } from '../controllers/products/get-product-details-controller';
 import { listingProductsByUserController } from '../controllers/products/listing-products-by-user-controller';
+import { listingProductsCursorModeController } from '../controllers/products/listing-products-cursor-mode-controller';
+import { listingProductsCursorModeSchema } from '../schemas/product/listing-products-cursor-mode-schema';
 
 export async function productsRoutes(app: FastifyInstance) {
 	app
@@ -47,6 +49,15 @@ export async function productsRoutes(app: FastifyInstance) {
 			{ preHandler: [authMiddleware, verifyUserPermissions('Product', 'read')], schema: listingProductsSchema },
 			listingProductsController
 		);
+
+	app.withTypeProvider<ZodTypeProvider>().get(
+		'/cursor-mode',
+		{
+			preHandler: [authMiddleware, verifyUserPermissions('Product', 'read')],
+			schema: listingProductsCursorModeSchema,
+		},
+		listingProductsCursorModeController
+	);
 
 	app
 		.withTypeProvider<ZodTypeProvider>()

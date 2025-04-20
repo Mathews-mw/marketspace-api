@@ -13,4 +13,5 @@ export interface IPaginationResponse {
 export interface ICursor {
 	nextCursor?: string;
 	previousCursor?: string;
+	stillHaveData: boolean;
 }

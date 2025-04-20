@@ -17,8 +17,8 @@ export class ProductDetailsPresenter {
 			created_at: data.createdAt,
 			updated_at: data.updatedAt ?? null,
 			images: data.images.map(ProductImagePresenter.toHTTP),
-			paymentMethods: data.paymentMethods.map(PaymentMethodPresenter.toHTTP),
-			user: UserPresenter.toHTTP(data.user),
+			payment_methods: data.paymentMethods.map(PaymentMethodPresenter.toHTTP),
+			owner: UserPresenter.toHTTP(data.user),
 		};
 	}
 }

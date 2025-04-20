@@ -75,7 +75,7 @@ Marketspace API is a RESTful backend service developed with Node.js and TypeScri
     
     The API should now be running on http://localhost:3333.
 
-**Note:** The API uses Firebase Storage to manage file uploads. In this case, you need to create an account in the storage and generate a .json file to make the connection.
+**Note:** The API uses Firebase Storage to manage file uploads. In this case, you need to create an account in the storage and generate a JSON file to make the connection.
     
 
 ## Documentation

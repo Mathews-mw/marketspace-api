@@ -1,6 +1,8 @@
 import { container } from 'tsyringe';
 
 import { DependencyIdentifiers } from './dependency-identifiers';
+import { ETagCacheRepository } from '@/infra/cache/etag-cache-repository';
+import { RedisCacheRepository } from '@/infra/cache/redis-cache-repository';
 import { FirebaseStorageProvider } from '../providers/firebase-storage-provider';
 import { PrismaUsersRepository } from '@/infra/database/repositories/prisma-users-repository';
 import { PrismaAccountsRepository } from '@/infra/database/repositories/prisma-accounts-repository';
@@ -20,4 +22,9 @@ registerSingleton('ProductsRepository', PrismaProductsRepository);
 registerSingleton('ProductImagesRepository', PrismaProductImagesRepository);
 registerSingleton('PaymentMethodsRepository', PrismaPaymentMethodsRepository);
 
+//Storage
 registerSingleton('FirebaseStorageProvider', FirebaseStorageProvider);
+
+//Cache
+registerSingleton('CacheRepository', RedisCacheRepository);
+registerSingleton('ETagCacheRepository', ETagCacheRepository);

@@ -6,6 +6,8 @@ export const DEPENDENCY_IDENTIFIERS = {
 	PRODUCTS_REPOSITORY: 'ProductsRepository',
 	PRODUCT_IMAGES_REPOSITORY: 'ProductImagesRepository',
 	PAYMENT_METHODS_REPOSITORY: 'PaymentMethodsRepository',
+	CACHE_REPOSITORY: 'CacheRepository',
+	ETAG_CACHE_REPOSITORY: 'ETagCacheRepository',
 } as const;
 
 export type DependencyIdentifiers = (typeof DEPENDENCY_IDENTIFIERS)[keyof typeof DEPENDENCY_IDENTIFIERS];

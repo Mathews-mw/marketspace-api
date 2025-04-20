@@ -3,11 +3,13 @@ import { ProductImage } from '../product-image';
 import { PaymentMethod } from '../payment-method';
 import { ValueObject } from '@/core/entities/value-object';
 import { UniqueEntityId } from '@/core/entities/unique-entity-id';
+import { User } from '../user';
 
 export interface IProductInfo extends IProductProps {
 	id: UniqueEntityId;
 	images: Array<ProductImage>;
 	paymentMethods: Array<PaymentMethod>;
+	owner: User;
 }
 
 export class ProductInfo extends ValueObject<IProductInfo> {
@@ -57,6 +59,10 @@ export class ProductInfo extends ValueObject<IProductInfo> {
 
 	get paymentMethods() {
 		return this.props.paymentMethods;
+	}
+
+	get owner() {
+		return this.props.owner;
 	}
 
 	static create(props: IProductInfo) {
