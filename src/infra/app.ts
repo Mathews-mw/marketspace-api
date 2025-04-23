@@ -21,7 +21,6 @@ import {
 import { env } from '@/env';
 import { routes } from './http/routes';
 import { errorHandler } from './error-handler';
-import { cachePlugin } from './http/middlewares/cache-middleware';
 
 export const app = fastify().withTypeProvider<ZodTypeProvider>();
 
@@ -42,13 +41,15 @@ await app.register(fastifyCaching, {
 	expiresIn: 60 * 1000, // 1 minuto default
 });
 
-// Plugin personalizado cache para validar ETag
-await app.register(cachePlugin);
-
 app.setSerializerCompiler(serializerCompiler);
 app.setValidatorCompiler(validatorCompiler);
 
-app.register(fastifyMultipart, { limits: { files: 6 } });
+app.register(fastifyMultipart, {
+	limits: {
+		files: 6,
+		fileSize: 25 * 1024 * 1024, // 25 mb
+	},
+});
 
 app.setErrorHandler(errorHandler);
 

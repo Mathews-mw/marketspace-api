@@ -1,7 +1,7 @@
 import { container } from 'tsyringe';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
-import { ProductDetailsPresenter } from '../../presenters/product/product-details-presenter';
+import { ProductInfoPresenter } from '../../presenters/product/product-info-presenter';
 import { ListingUserProductsByUserUseCase } from '@/domains/application/features/products/use-cases/listing-products-by-user-use-case';
 import {
 	ListingProductsByUserParams,
@@ -28,7 +28,7 @@ export async function listingProductsByUserController(request: FastifyRequest, r
 
 	const response = {
 		amount: result.value.amount,
-		products: result.value.products.map(ProductDetailsPresenter.toHTTP),
+		products: result.value.products.map(ProductInfoPresenter.toHTTP),
 	};
 
 	return reply.status(200).send(response);

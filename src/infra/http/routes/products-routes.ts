@@ -2,6 +2,7 @@ import { FastifyInstance } from 'fastify';
 
 import { ZodTypeProvider } from 'fastify-type-provider-zod';
 import { authMiddleware } from '../middlewares/auth-middleware';
+import { cachePreHandler } from '../middlewares/cache-middleware';
 import { verifyUserPermissions } from '../middlewares/permission-middleware';
 import { createProductSchema } from '../schemas/product/create-product-schema';
 import { updateProductSchema } from '../schemas/product/update-product-schema';
@@ -13,9 +14,10 @@ import { updateProductController } from '../controllers/products/update-product-
 import { listingProductsController } from '../controllers/products/listing-products-controller';
 import { listingProductsByUserSchema } from '../schemas/product/listing-products-by-user-schema';
 import { getProductDetailsController } from '../controllers/products/get-product-details-controller';
+import { listingProductsCursorModeSchema } from '../schemas/product/listing-products-cursor-mode-schema';
 import { listingProductsByUserController } from '../controllers/products/listing-products-by-user-controller';
 import { listingProductsCursorModeController } from '../controllers/products/listing-products-cursor-mode-controller';
-import { listingProductsCursorModeSchema } from '../schemas/product/listing-products-cursor-mode-schema';
+import { deleteProductController } from '../controllers/products/delete-product-controller';
 
 export async function productsRoutes(app: FastifyInstance) {
 	app
@@ -39,7 +41,7 @@ export async function productsRoutes(app: FastifyInstance) {
 		.delete(
 			'/:productId',
 			{ preHandler: [authMiddleware, verifyUserPermissions('Product', 'delete')], schema: deleteProductSchema },
-			updateProductController
+			deleteProductController
 		);
 
 	app
@@ -59,19 +61,28 @@ export async function productsRoutes(app: FastifyInstance) {
 		listingProductsCursorModeController
 	);
 
-	app
-		.withTypeProvider<ZodTypeProvider>()
-		.get(
-			'/user/:userId',
-			{ preHandler: [authMiddleware, verifyUserPermissions('Product', 'read')], schema: listingProductsByUserSchema },
-			listingProductsByUserController
-		);
+	app.withTypeProvider<ZodTypeProvider>().get(
+		'/user/:userId',
+		{
+			preHandler: [authMiddleware, verifyUserPermissions('Product', 'read')],
+			schema: listingProductsByUserSchema,
+		},
+		listingProductsByUserController
+	);
 
-	app
-		.withTypeProvider<ZodTypeProvider>()
-		.get(
-			'/:productId/details',
-			{ preHandler: authMiddleware, schema: getProductDetailsSchema },
-			getProductDetailsController
-		);
+	app.withTypeProvider<ZodTypeProvider>().get(
+		'/:productId/details',
+		{
+			preHandler: [
+				authMiddleware,
+				cachePreHandler({
+					route: '/api/products/:productId/details',
+					pickParams: (req) => ({ ...(req.query as Record<string, any>) }),
+					ttl: 60 * 30, // 30 min
+				}),
+			],
+			schema: getProductDetailsSchema,
+		},
+		getProductDetailsController
+	);
 }

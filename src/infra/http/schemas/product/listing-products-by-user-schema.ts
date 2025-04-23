@@ -42,7 +42,7 @@ const responseSchema = z.object({
 					url: z.string().url(),
 				})
 			),
-			paymentMethods: z.array(
+			payment_methods: z.array(
 				z.object({
 					id: z.string().uuid(),
 					type: paymentTypeSchema,
@@ -50,14 +50,10 @@ const responseSchema = z.object({
 					product_id: z.string().uuid(),
 				})
 			),
-			user: z.object({
-				id: z.string().uuid(),
+			owner: z.object({
 				name: z.string(),
 				email: z.string().email(),
-				phone: z.string().nullable(),
-				role: rolesSchema,
-				avatar: z.string().url().nullable(),
-				is_active: z.boolean(),
+				avatar: z.string().url().optional().nullable(),
 			}),
 		})
 	),

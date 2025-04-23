@@ -7,6 +7,8 @@ import { DeleteProductUseCase } from '@/domains/application/features/products/us
 export async function deleteProductController(request: FastifyRequest, reply: FastifyReply) {
 	const { productId } = request.params as DeleteProductParams;
 
+	console.log('product id to delete: ', productId);
+
 	const { sub } = request.user;
 
 	const service = container.resolve(DeleteProductUseCase);

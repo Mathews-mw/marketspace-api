@@ -185,7 +185,7 @@ export class PrismaProductsRepository implements IProductRepository {
 
 		return {
 			amount,
-			products: products.map(ProductDetailsMapper.toDomain),
+			products: products.map(ProductInfoMapper.toDomain),
 		};
 	}
 

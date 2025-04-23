@@ -1,8 +1,8 @@
 import { Product } from '@/domains/models/entities/product';
+import { ICursor } from '@/core/interfaces/paginating-interfaces';
 import { PaymentType } from '@/domains/models/entities/payment-method';
 import { ProductInfo } from '@/domains/models/entities/value-objects/product-info';
 import { ProductDetails } from '@/domains/models/entities/value-objects/product-details';
-import { ICursor } from '@/core/interfaces/paginating-interfaces';
 
 export interface IProductQuerySearch {
 	userId?: string;
@@ -39,9 +39,9 @@ export interface IProductRepository {
 	create(product: Product): Promise<Product>;
 	update(product: Product): Promise<Product>;
 	delete(product: Product): Promise<void>;
-	findMany(query: IProductQuerySearch): Promise<{ amount: number; products: ProductInfo[] }>;
+	findMany(query: IProductQuerySearch): Promise<{ amount: number; products: Array<ProductInfo> }>;
 	findManyWithCursor(query: IProductQuerySearchWithCursor): Promise<IProductCursorResponse>;
-	findManyByUser(query: IProductByUserQuerySearch): Promise<{ amount: number; products: ProductDetails[] }>;
+	findManyByUser(query: IProductByUserQuerySearch): Promise<{ amount: number; products: Array<ProductInfo> }>;
 	findById(id: string): Promise<Product | null>;
 	findDetails(id: string): Promise<ProductDetails | null>;
 }

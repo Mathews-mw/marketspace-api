@@ -7,6 +7,7 @@ import { IUserRepository } from '../../users/repositories/user-repository';
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
 import { DEPENDENCY_IDENTIFIERS } from '@/shared/containers/dependency-identifiers';
 import { ProductDetails } from '@/domains/models/entities/value-objects/product-details';
+import { ProductInfo } from '@/domains/models/entities/value-objects/product-info';
 
 interface IRequest {
 	userId: string;
@@ -16,7 +17,7 @@ interface IRequest {
 	paymentMethods?: Array<PaymentType>;
 }
 
-type Response = Outcome<ResourceNotFoundError, { amount: number; products: ProductDetails[] }>;
+type Response = Outcome<ResourceNotFoundError, { amount: number; products: ProductInfo[] }>;
 
 @injectable()
 export class ListingUserProductsByUserUseCase {
